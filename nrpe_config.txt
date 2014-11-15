@@ -1,0 +1,135 @@
+NRPE configuration
+
+Configuration in remote machine:
+Create a new nagios user account and give it a password.
+/usr/sbin/useradd nagios
+passwd nagios
+
+Download and extract nagios plugins
+wget https://www.nagios-plugins.org/download/nagios-plugins-1.5.tar.gz
+
+apt-get install libssl-dev
+tar zxvf nagios-plugins-1.5.tar.gz
+cd nagios-plugins-1.5
+
+Compile and install the plugins.
+./configure --with-nagios-user=nagios --with-nagios-group=nagios
+make
+make install
+
+The permissions on the plugin directory and the plugins will need to be fixed at this point, so run the following commands.
+chown nagios.nagios /usr/local/nagios
+chown -R nagios.nagios /usr/local/nagios/libexec
+
+Install the NRPE daemon as a service under xinetd.
+apt-get install xinetd
+
+wget http://sourceforge.net/projects/nagios/files/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz
+tar zxvf nrpe-2.15.tar.gz
+cd nrpe-2.15
+
+./configure --with-ssl=/usr/bin/openssl --with-ssl-lib=/usr/lib/i386-linux-gnu/
+make all
+
+for 64bit users:
+ln -s /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/libssl.so
+./configure
+make all
+
+Install the NRPE plugin (for testing), daemon, and sample daemon config file.
+make install-plugin
+make install-daemon
+make install-daemon-config
+
+Install the NRPE daemon as a service under xinetd.
+make install-xinetd
+
+Edit the /etc/xinetd.d/nrpe file and add the IP address of the monitoring server to the only_from directive.
+only_from = 127.0.0.1 <nagios_ip_address>
+
+save and exit
+:wq
+
+Add the following entry for the NRPE daemon to the /etc/services file.
+nrpe 5666/tcp # NRPE
+
+save and exit
+:wq
+
+Restart the xinetd service.
+service xinetd restart
+
+Test NRPE locally
+Make sure the nrpe daemon is running under xinetd.
+netstat -at | grep nrpe
+
+The output out this command should show something like this:
+tcp 0 0 *:nrpe *:* LISTEN
+
+Configuration in Nagios Machine:
+Install nrpe plugin in the machine that runs Nagios
+wget http://sourceforge.net/projects/nagios/files/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz
+tar zxvf nrpe-2.15.tar.gz
+cd nrpe-2.15
+
+./configure --with-ssl=/usr/bin/openssl --with-ssl-lib=/usr/lib/i386-linux-gnu/
+make all
+make install-plugin
+
+for 64bit users:
+ln -s /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/libssl.so
+./configure
+make all
+make install-plugin
+
+Test the communication between host and remote machine.
+/usr/local/nagios/libexec/check_nrpe -H <ip_address_remote_machine>
+
+You should get a string like this:
+NRPE v2.15
+
+Configure Nconf with nrpe commands (some of them)
+Inside the file /usr/local/nagios/etc/nrpe.cfg it is possible to see the following lines:
+
+#Check current users
+command[check_users]=/usr/local/nagios/libexec/check_users -w 5 -c 10      
+
+#Current Load
+command[check_load]=/usr/local/nagios/libexec/check_load -w 15,10,5 -c 30,25,20
+
+#Root Partition
+command[check_sda1]=/usr/local/nagios/libexec/check_disk -w 20% -c 10% -p /dev/sda1
+
+#Zombie Processes
+command[check_zombie_procs]=/usr/local/nagios/libexec/check_procs -w 5 -c 10 -s Z
+
+#Total Processes
+command[check_total_procs]=/usr/local/nagios/libexec/check_procs -w 150 -c 200
+
+#Swap Usage
+command[check_remote_swap]=/usr/local/nagios/libexec/check_swap -w 70% -c 90%
+
+Before use the string check_disk make sure that /dev/xxx is same as you have for example:
+
+df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       109G   18G   86G  17% /
+
+Configure nconf to use nrpe:
+In nconf menu click on add in checkcommands option and write:
+Configure nconf to use nrpe:
+In nconf menu click on add in checkcommands option and write:
+
+
+
+check command name: check_users
+default service name: Check Users
+check command line: $USER1$/check_nrpe -H $HOSTADDRESS$ -c check_users
+
+Default service template: generic_service
+
+then click on submit.
+
+Now the command is ready and can be add as service in the configuration.
+
+
