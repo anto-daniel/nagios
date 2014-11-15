@@ -14,6 +14,7 @@ chown nagios:www-data nagios
 /etc/init.d/nagios reload
 cd
 wget http://forum.nconf.org/download/file.php?id=156&sid=1cba0f4c549f9dc42524ac476316be3f
+mv file.php* nconf-1.3.0-0_not_used_advanced_services_wont_be_written.patch.zip
 unzip nconf-1.3.0-0_not_used_advanced_services_wont_be_written.patch.zip
 cp -rfv nconf-1.3.0-0_not_used_advanced_services_wont_be_written.patch /var/www/html/nconf
 cd /var/www/html/nconf
