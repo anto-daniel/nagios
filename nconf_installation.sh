@@ -45,14 +45,5 @@ define('DBPASS', 'nconf');
 ?>
 EOM
 
-cat > /var/www/html/nconf/config/nconf.php <<EOM
-<?php
-
-define('NCONFDIR', '/var/www/html/nconf');
-define('NAGIOS_BIN', '/usr/local/nagios/bin/nagios');
-
-?>
-EOM
-
 /etc/init.d/nagios reload
 
