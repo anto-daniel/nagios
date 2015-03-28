@@ -2,7 +2,9 @@
 
 apt-get update
 apt-get install apache2 mysql-server mysql-client php5 libapache2-mod-php5 phpmyadmin -y
+mysql -uroot -pmysql < create_database.sql
 wget http://sourceforge.net/projects/nconf/files/nconf/1.3.0-0/nconf-1.3.0-0.tgz
+mkdir -p /var/www/html
 tar xvzf nconf-1.3.0-0.tgz -C /var/www/html
 cd /var/www/html/nconf
 chmod 777 config/
