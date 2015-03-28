@@ -34,3 +34,25 @@ chmod -R 777 /usr/local/nagios/etc/
 sed -i "32s/^/define\(\'CHECK_STATIC_SYNTAX\', 0\);\n/" /var/www/html/nconf/config/nconf.php
 cp -R /var/www/nconf/img /usr/local/nagios/share/images
 /etc/init.d/nagios reload
+cat > /var/www/html/nconf/config/mysql.php <<EOM
+<?php
+
+define('DBHOST', 'localhost');
+define('DBNAME', 'nconf');
+define('DBUSER', 'nconf');
+define('DBPASS', 'nconf');
+
+?>
+EOM
+
+cat > /var/www/html/nconf/config/nconf.php <<EOM
+<?php
+
+define('NCONFDIR', '/var/www/html/nconf');
+define('NAGIOS_BIN', '/usr/local/nagios/bin/nagios');
+
+?>
+EOM
+
+/etc/init.d/nagios reload
+
