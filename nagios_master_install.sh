@@ -11,6 +11,7 @@ wget http://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
 tar xvzf nagios-4.0.8.tar.gz
 tar xvzf nagios-plugins-2.0.3.tar.gz
 cd nagios-4.0.8
+mkdir -p /etc/apache2/conf-available
 ./configure --with-nagios-group=nagios --with-command-group=nagcmd --with-mail=/usr/sbin/sendmail --with-httpd_conf=/etc/apache2/conf-available
 make all
 make install
@@ -40,7 +41,7 @@ expect eof
 EOM
 chmod +x nagios_passwd.sh
 ./nagios_passwd.sh
-sed -i '29s/^/Include\ conf-available\/nagios.conf\n/' /etc/apache2/sites-enabled/000-default.conf
+sed -i '29s/^/Include\ conf-available\/nagios.conf\n/' /etc/apache2/sites-enabled/000-default
 service apache2 restart
 service nagios restart
 curl -u nagiosadmin:nagiosadmin http://localhost/nagios
