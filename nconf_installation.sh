@@ -46,16 +46,16 @@ sed -ie "32s/^/define\(\'CHECK_STATIC_SYNTAX\', 0\);\n/" $nconfdir/config/nconf.
 #rm -rfv INSTALL INSTALL.php UPDATE UPDATE.php
 cp -R $nconfdir/img /usr/local/nagios/share/images
 /etc/init.d/nagios reload
-cat > /var/www/html/nconf/config/mysql.php <<EOM
-<?php
+#cat > /var/www/html/nconf/config/mysql.php <<EOM
+#<?php
 
-define('DBHOST', 'localhost');
-define('DBNAME', 'nconf');
-define('DBUSER', 'nconf');
-define('DBPASS', 'nconf');
-
-?>
-EOM
+#define('DBHOST', 'localhost');
+#define('DBNAME', 'nconf');
+#define('DBUSER', 'nconf');
+#define('DBPASS', 'nconf');
+#
+#?>
+#EOM
 
 /etc/init.d/nagios reload
 
