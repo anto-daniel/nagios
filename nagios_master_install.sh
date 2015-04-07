@@ -41,7 +41,15 @@ expect eof
 EOM
 chmod +x nagios_passwd.sh
 ./nagios_passwd.sh
-sed -i '29s/^/Include\ conf-available\/nagios.conf\n/' /etc/apache2/sites-enabled/000-default.conf
+if [ -e /etc/apache2/sites-enabled/000-default.conf ]
+then
+    sed -i '29s/^/Include\ conf-available\/nagios.conf\n/' /etc/apache2/sites-enabled/000-default.conf
+elif [ -e /etc/apache2/sites-enabled/000-default ]
+then
+    sed -i '29s/^/Include\ conf-available\/nagios.conf\n/' /etc/apache2/sites-enabled/000-default
+else
+    echo "Neither of the config file exists.."
+fi
 service apache2 restart
 service nagios restart
 curl -u nagiosadmin:nagiosadmin http://localhost/nagios
