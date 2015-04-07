@@ -41,7 +41,7 @@ expect eof
 EOM
 chmod +x nagios_passwd.sh
 ./nagios_passwd.sh
-sed -i '29s/^/Include\ conf-available\/nagios.conf\n/' /etc/apache2/sites-enabled/000-default
+sed -i '29s/^/Include\ conf-available\/nagios.conf\n/' /etc/apache2/sites-enabled/000-default.conf
 service apache2 restart
 service nagios restart
 curl -u nagiosadmin:nagiosadmin http://localhost/nagios
