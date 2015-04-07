@@ -42,8 +42,8 @@ sed -ie "11s/^/#/g" $nconfdir/config/nconf.php
 sed -ie "16s|^|define('NCONFDIR', \"$nconfdir\")\;|g" $nconfdir/config/nconf.php
 sed -ie "23s|/var/www/nconf/bin/nagios|/usr/local/nagios/bin/nagios|g" $nconfdir/config/nconf.php
 #sed -ie "32s/^/define\(\'CHECK_STATIC_SYNTAX\', 0\);\n/" $nconfdir/config/nconf.php
+mysql -unconf -pnconf nconf < INSTALL/create_database.sql
 rm -rfv INSTALL INSTALL.php UPDATE UPDATE.php
 cp -R $nconfdir/img /usr/local/nagios/share/images
-mysql -unconf -pnconf nconf < INSTALL/create_database.sql
 /etc/init.d/nagios reload
 
