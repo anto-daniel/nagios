@@ -45,5 +45,7 @@ sed -ie "23s|/var/www/nconf/bin/nagios|/usr/local/nagios/bin/nagios|g" $nconfdir
 mysql -unconf -pnconf nconf < INSTALL/create_database.sql
 rm -rfv INSTALL INSTALL.php UPDATE UPDATE.php
 cp -R $nconfdir/img /usr/local/nagios/share/images
+chown nagios:www-data /usr/local/nagios/bin/nagios
+tail -2 $nconfdir/static_cfg/nagios.cfg | awk -F= '{print $2}' | xargs -I {} mkdir -p {}
+mv -v $nconfdir/static_cfg/nagios.cfg /usr/local/nagios/etc
 /etc/init.d/nagios reload
-
