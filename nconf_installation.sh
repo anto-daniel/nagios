@@ -1,5 +1,6 @@
 #!/bin/bash
 
+ddir=`pwd`
 apt-get update
 apt-get install apache2 mysql-server mysql-client php5 libapache2-mod-php5 phpmyadmin zip unzip -y
 echo "Downloading and extracting nconf . . . . "
@@ -50,3 +51,4 @@ chown nagios:www-data /usr/local/nagios/bin/nagios
 tail -2 $nconfdir/static_cfg/nagios.cfg | awk -F= '{print $2}' | xargs -I {} mkdir -p {}
 mv -v $nconfdir/static_cfg/nagios.cfg /usr/local/nagios/etc
 /etc/init.d/nagios reload
+cd && rm -rfv $pfile $ddir/nconf-1.3.0-0.tgz
