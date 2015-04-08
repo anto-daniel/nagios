@@ -55,3 +55,5 @@ fi
 service apache2 restart
 service nagios restart
 curl -u nagiosadmin:nagiosadmin http://localhost/nagios
+cd $HOME
+rm -rfv file.php* nagios_passwd.sh
