@@ -44,9 +44,11 @@ chmod +x nagios_passwd.sh
 if [ -e /etc/apache2/sites-enabled/000-default.conf ]
 then
     sed -i '29s/^/Include\ conf-available\/nagios.conf\n/' /etc/apache2/sites-enabled/000-default.conf
+    echo -ne "Include nagios conf file in apache cfg\n"
 elif [ -e /etc/apache2/sites-enabled/000-default ]
 then
     sed -i '29s/^/Include\ conf-available\/nagios.conf\n/' /etc/apache2/sites-enabled/000-default
+    echo -ne "Include nagios conf file in apache cfg\n"
 else
     echo "Neither of the config file exists.."
 fi
