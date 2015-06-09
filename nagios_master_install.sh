@@ -6,7 +6,7 @@ groupadd --system nagcmd
 usermod -a -G nagcmd nagios
 usermod -a -G nagcmd www-data
 cd /tmp
-wget http://switch.dl.sourceforge.net/project/nagios/nagios-4.x/nagios-4.0.8/nagios-4.0.8.tar.gz
+wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-4.0.8.tar.gz
 wget http://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
 tar xvzf nagios-4.0.8.tar.gz
 tar xvzf nagios-plugins-2.0.3.tar.gz
