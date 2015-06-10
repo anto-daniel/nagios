@@ -51,4 +51,4 @@ chown nagios:www-data /usr/local/nagios/bin/nagios
 tail -2 $nconfdir/static_cfg/nagios.cfg | awk -F= '{print $2}' | xargs -I {} mkdir -p {}
 mv -v $nconfdir/static_cfg/nagios.cfg /usr/local/nagios/etc
 /etc/init.d/nagios reload
-cd && rm -rfv $pfile $ddir/nconf-1.3.0-0.tgz
+cd && rm -rfv $pfile $ddir/nconf-1.3.0-0.tgz $HOME/file.php*
