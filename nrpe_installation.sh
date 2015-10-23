@@ -2,7 +2,13 @@
 
 
 apt-get install gcc gawk openssl make libssl-dev
+cd /tmp
 wget http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz
+wget http://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
+cd nagios-plugins-2.0.3
+./configure --with-nagios-user=nagios --with-nagios-group=nagios --enable-perl-modules --enable-extra-opts
+make
+make install
 cmd=`grep nagios /etc/passwd`
 st=`echo $?`
 
