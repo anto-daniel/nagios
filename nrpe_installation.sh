@@ -12,13 +12,13 @@ else
   echo "Creating new user \"nagios\""
   useradd nagios
   cat > nagios_passwd.sh << EOM
-  #!/usr/bin/expect -f
-  spawn passwd nagios
-  expect "Enter new UNIX password: "
-  send "nagios\r"
-  expect "Retype new UNIX password: "
-  send "nagios\r"
-  expect eof
+#!/usr/bin/expect -f
+spawn passwd nagios
+expect "Enter new UNIX password: "
+send "nagios\r"
+expect "Retype new UNIX password: "
+send "nagios\r"
+expect eof
 EOM
   chmod u+x nagios_passwd.sh
   ./nagios_passwd.sh
