@@ -3,8 +3,12 @@
 
 apt-get install gcc gawk openssl make libssl-dev
 cd /tmp
-wget http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz
 wget http://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
+d_st=`echo $?`
+if [[ $d_st -ne 0 ]]; then
+  echo "Unable to download nagios plugin. Exiting...."
+  exit 1
+fi
 cd nagios-plugins-2.0.3
 ./configure --with-nagios-user=nagios --with-nagios-group=nagios --enable-perl-modules --enable-extra-opts
 make
@@ -30,6 +34,12 @@ EOM
   ./nagios_passwd.sh
 fi
 
+wget http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz
+n_st=`echo $?`
+if [[ $n_st -ne 0 ]]; then
+ echo "Unable to download nrpe. Exiting . . ."
+ exit 1
+fi 
 tar xvzf nrpe-2.15.tar.gz
 cd nrpe-2.15
 ./configure --with-ssl=/usr/bin/openssl --with-ssl-lib=/usr/lib/x86_64-linux-gnu
