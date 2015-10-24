@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-apt-get install gcc gawk openssl make libssl-dev
+apt-get update && apt-get install gcc gawk openssl make libssl-dev -y
 cd /tmp
 wget http://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
 d_st=`echo $?`
