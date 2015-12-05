@@ -52,6 +52,7 @@ make install-daemon-config
 echo "Enter Nagios Monitoring Server IP Address: "
 read nag_ip
 sed -ie "/allowed_hosts/ s/$/,${nag_ip}/" /usr/local/nagios/etc/nrpe.cfg
+sed -ie "/dont_blame_nrpe/ s/0/1/" /usr/local/nagios/etc/nrpe.cfg
 cp init-script.debian /etc/init.d/nrpe
 chmod 755 /etc/init.d/nrpe
 /etc/init.d/nrpe start
