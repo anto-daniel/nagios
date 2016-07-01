@@ -5,7 +5,7 @@ apt-get update
 apt-get install apache2 mysql-server mysql-client php5 libapache2-mod-php5 phpmyadmin zip unzip -y
 echo "Downloading and extracting nconf . . . . "
 wget http://sourceforge.net/projects/nconf/files/nconf/1.3.0-0/nconf-1.3.0-0.tgz
-apache_dir=`cat /etc/apache2/sites-{enabled,available}/000-default.conf | grep -i 'DocumentRoot' | awk '{print $2}' | head -1 2>error`
+apache_dir=`cat /etc/apache2/sites-{enabled,available}/000-default{,.conf} | grep -i 'DocumentRoot' | awk '{print $2}' | head -1 2>error`
 nconfdir="$apache_dir/nconf"
 tar xvzf nconf-1.3.0-0.tgz -C $apache_dir
 chown -R www-data:www-data $nconfdir
